@@ -1,0 +1,21 @@
+{
+  "name": "personal-apps-showcase",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "A beautiful showcase of all the apps I use and why I chose them",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check"
+  },
+  "dependencies": {
+    "@astrojs/tailwind": "^6.0.2",
+    "@astrojs/check": "^0.9.4",
+    "@tailwindcss/typography": "^0.5.16",
+    "astro": "^5.12.1",
+    "tailwindcss": "^3.4.17",
+    "typescript": "^5.8.2"
+  },
+  "packageManager": "pnpm@10.5.2"
+}

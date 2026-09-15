@@ -1,0 +1,167 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import AppCard from "@/components/AppCard.astro";
+import { getCollection } from "astro:content";
+
+const BASE = import.meta.env.BASE_URL;
+const baseURL = BASE.endsWith("/") ? BASE : `${BASE}/`;
+
+const apps = (await getCollection("apps")).sort((a, b) => {
+  if (a.data.featured && !b.data.featured) return -1;
+  if (!a.data.featured && b.data.featured) return 1;
+  return a.data.name.localeCompare(b.data.name);
+});
+
+const categories = [...new Set(apps.map((a) => a.data.category))].sort();
+const featured = apps.filter((a) => a.data.featured);
+const nonFeatured = apps.filter((a) => !a.data.featured);
+const all = [...featured, ...nonFeatured];
+---
+
+<Layout title="Apps I Use — Goodborn" description="Curated apps that power my workflow — and why I chose them.">
+  <!-- Hero -->
+  <section class="relative overflow-hidden px-6 py-24 sm:py-32">
+    <div class="relative mx-auto max-w-4xl text-center">
+      <div
+        class="mb-6 inline-flex items-center gap-2 rounded-full border border-glow-purple/30 bg-glow-purple/10 px-4 py-1.5 backdrop-blur-md"
+      >
+        <span class="relative flex h-2.5 w-2.5">
+          <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-glow-purple opacity-75"></span>
+          <span class="relative inline-flex h-2.5 w-2.5 rounded-full bg-glow-purple"></span>
+        </span>
+        <span class="text-xs font-bold uppercase tracking-widest text-glow-purple">
+          Living on Arch Linux · KDE Plasma
+        </span>
+      </div>
+      <h1 class="glow-text-strong mb-6 text-5xl font-black leading-tight tracking-tight text-text-primary sm:text-7xl">
+        Apps I Use
+        <span class="block bg-accent-gradient-wide bg-clip-text text-transparent">
+          And Why I Chose Them
+        </span>
+      </h1>
+      <p class="mx-auto mb-10 max-w-2xl text-lg leading-relaxed text-text-secondary sm:text-xl">
+        A curated arsenal of {all.length}+ apps that power my daily workflow.
+        Every pick earned its place by beating the alternatives I tried.
+      </p>
+      <div class="flex flex-wrap items-center justify-center gap-4">
+        <a
+          href={`${baseURL}#apps`}
+          class="rounded-xl bg-accent-gradient px-8 py-3.5 text-base font-bold text-white shadow-glow-lg transition-all duration-300 hover:scale-105 hover:shadow-[0_8px_40px_rgba(168,85,247,0.6)]"
+        >
+          Browse the Collection
+        </a>
+        <a
+          href={`${baseURL}#categories`}
+          class="rounded-xl border border-white/[0.1] bg-white/[0.03] px-8 py-3.5 text-base font-bold text-text-secondary transition-all duration-300 hover:border-glow-purple/30 hover:text-text-primary hover:shadow-glow-sm"
+        >
+          The Why Story
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats strip -->
+  <section class="border-y border-white/[0.06] bg-white/[0.02] py-10">
+    <div class="mx-auto grid max-w-5xl grid-cols-2 gap-8 px-6 sm:grid-cols-4">
+      <div class="text-center">
+        <p class="text-4xl font-black text-text-primary glow-text">{all.length}</p>
+        <p class="mt-1 text-xs font-bold uppercase tracking-widest text-text-dim">
+          Apps Curated
+        </p>
+      </div>
+      <div class="text-center">
+        <p class="text-4xl font-black text-text-primary glow-text">{categories.length}</p>
+        <p class="mt-1 text-xs font-bold uppercase tracking-widest text-text-dim">
+          Categories
+        </p>
+      </div>
+      <div class="text-center">
+        <p class="text-4xl font-black text-text-primary glow-text">100%</p>
+        <p class="mt-1 text-xs font-bold uppercase tracking-widest text-text-dim">
+          Free / Open Source
+        </p>
+      </div>
+      <div class="text-center">
+        <p class="text-4xl font-black text-text-primary glow-text">∞</p>
+        <p class="mt-1 text-xs font-bold uppercase tracking-widest text-text-dim">
+          Alternatives Tried
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Categories -->
+  <section id="categories" class="mx-auto max-w-7xl px-6 py-20">
+    <div class="mb-10 text-center">
+      <p class="mb-3 text-xs font-bold uppercase tracking-widest text-glow-purple">
+        Organized Chaos
+      </p>
+      <h2 class="glow-text mb-4 text-3xl font-extrabold text-text-primary sm:text-4xl">
+        The Arsenal
+      </h2>
+      <p class="mx-auto max-w-xl text-text-secondary">
+        Organized by what they do — not by what they are. Filter, explore, and
+        find your next tool.
+      </p>
+    </div>
+    <div id="category-chips" class="mb-10 flex flex-wrap items-center justify-center gap-2.5">
+      <button
+        class="chip chip-active"
+        data-category="all"
+      >
+        All Apps
+        <span class="ml-2 rounded-full bg-white/20 px-2 py-0.5 text-xs font-bold">{all.length}</span>
+      </button>
+      {
+        categories.map((cat) => (
+          <button class="chip chip-inactive" data-category={cat}>
+            {cat}
+          </button>
+        ))
+      }
+    </div>
+    <div id="apps" class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3" data-category-container>
+      {
+        all.map((app) => (
+          <AppCard
+            icon={app.data.icon}
+            name={app.data.name}
+            category={app.data.category}
+            oneLiner={app.data.why}
+            screenshot={app.data.screenshot}
+            href={`${baseURL}apps/${app.slug}/`}
+            tags={app.data.tags ?? []}
+          />
+        ))
+      }
+    </div>
+  </section>
+
+  <script>
+    const container = document.querySelector("[data-category-container]");
+    const chips = document.querySelectorAll("[data-category]");
+    const appEls = container?.children ?? [];
+
+    chips.forEach((chip) => {
+      chip.addEventListener("click", () => {
+        chips.forEach((c) => {
+          c.classList.remove("chip-active");
+          c.classList.add("chip-inactive");
+        });
+        chip.classList.remove("chip-inactive");
+        chip.classList.add("chip-active");
+
+        const selected = chip.dataset.category;
+        Array.from(appEls).forEach((el) => {
+          const cat = el.dataset.category;
+          el.style.display =
+            selected === "all" || cat === selected ? "" : "none";
+        });
+        container?.classList.add("animate-[fadeIn_0.3s_ease-in]");
+        setTimeout(() => {
+          container?.classList.remove("animate-[fadeIn_0.3s_ease-in]");
+        }, 300);
+      });
+    });
+  </script>
+</Layout>

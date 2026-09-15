@@ -1,0 +1,36 @@
+---
+const BASE = import.meta.env.BASE_URL;
+const navItems = [
+  { label: "Apps", href: `${BASE}#apps` },
+  { label: "Categories", href: `${BASE}#categories` },
+  { label: "About", href: `${BASE}#about` },
+];
+---
+
+<header class="sticky top-0 z-20 border-b border-glow-purple/20 bg-bg-800/80 backdrop-blur-xl">
+  <div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
+    <a href={BASE} class="group flex items-center gap-2.5">
+      <span
+        class="flex h-9 w-9 items-center justify-center rounded-xl bg-accent-gradient text-sm font-black text-white shadow-glow-sm transition-transform duration-300 group-hover:scale-110"
+        aria-hidden="true"
+      >
+        GB
+      </span>
+      <span class="text-lg font-extrabold tracking-wide text-text-primary">
+        Goodborn<span class="text-glow-purple">.</span>
+      </span>
+    </a>
+    <nav class="flex items-center gap-1">
+      {
+        navItems.map((item) => (
+          <a
+            href={item.href}
+            class="rounded-lg px-4 py-2 text-sm font-semibold text-text-secondary transition-colors duration-200 hover:bg-white/5 hover:text-text-primary"
+          >
+            {item.label}
+          </a>
+        ))
+      }
+    </nav>
+  </div>
+</header>

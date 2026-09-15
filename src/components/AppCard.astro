@@ -1,0 +1,80 @@
+---
+interface Props {
+  icon: string;
+  name: string;
+  category: string;
+  oneLiner: string;
+  screenshot: string;
+  href: string;
+  tags: string[];
+}
+const { icon, name, category, oneLiner, screenshot, href, tags } = Astro.props;
+---
+
+<a
+  href={href}
+  data-category={category}
+  class="surface surface-hover group flex flex-col overflow-hidden"
+>
+  <div class="relative aspect-[16/9] overflow-hidden bg-bg-950">
+    {
+      screenshot.startsWith("http") ? (
+        <img
+          src={screenshot}
+          alt={`${name} screenshot`}
+          loading="lazy"
+          class="h-full w-full object-cover opacity-80 transition-all duration-500 group-hover:scale-105 group-hover:opacity-100"
+        />
+      ) : (
+        <div
+          class="flex h-full w-full items-center justify-center bg-gradient-to-br from-glow-purple/20 via-glow-indigo/10 to-transparent"
+        >
+          <span class="text-6xl font-black text-glow-purple/40">{name[0]}</span>
+        </div>
+      )
+    }
+    <div
+      class="absolute inset-0 bg-gradient-to-t from-bg-950/80 via-transparent to-transparent"
+    ></div>
+    <span
+      class="chip absolute left-3 top-3 bg-bg-950/70 text-xs font-bold uppercase tracking-wider text-glow-purple backdrop-blur-md"
+    >
+      {category}
+    </span>
+  </div>
+  <div class="flex flex-1 flex-col gap-3 p-5">
+    <div class="flex items-center gap-3">
+      {
+        icon.startsWith("http") ? (
+          <img src={icon} alt={`${name} icon`} class="h-10 w-10 rounded-xl" loading="lazy" />
+        ) : (
+          <span
+            class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-glow-purple/15 text-lg font-bold text-glow-purple"
+          >
+            {icon}
+          </span>
+        )
+      }
+      <div>
+        <h3 class="text-lg font-bold text-text-primary group-hover:text-glow-purple">
+          {name}
+        </h3>
+        <p class="text-xs font-medium uppercase tracking-wider text-text-dim">
+          {category}
+        </p>
+      </div>
+    </div>
+    <p class="flex-1 text-sm leading-relaxed text-text-secondary">{oneLiner}</p>
+    <div class="flex flex-wrap gap-1.5 pt-1">
+      {
+        tags.map((tag) => (
+          <span
+            class="rounded-full bg-white/[0.04] px-2.5 py-0.5 text-[11px] font-medium text-text-dim"
+          >
+            {tag}
+          </span>
+        ))
+      }
+    </div>
+  </div>
+</a>

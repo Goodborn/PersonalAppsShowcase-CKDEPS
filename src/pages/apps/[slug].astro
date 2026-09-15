@@ -1,0 +1,162 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import { getCollection, render } from "astro:content";
+
+const BASE = import.meta.env.BASE_URL;
+const baseURL = BASE.endsWith("/") ? BASE : `${BASE}/`;
+
+export async function getStaticPaths() {
+  const apps = await getCollection("apps");
+  return apps.map((app) => ({
+    params: { slug: app.slug },
+    props: { app },
+  }));
+}
+
+const { app } = Astro.props;
+const { Content } = await render(app);
+const { name, category, icon, screenshot, website, repo, why, alternatives, tags } =
+  app.data;
+---
+
+<Layout
+  title={`${name} — Apps I Use`}
+  description={why}
+>
+  <article class="mx-auto max-w-5xl px-6 py-12">
+    <!-- Breadcrumb -->
+    <nav class="mb-8">
+      <a
+        href={`${baseURL}#apps`}
+        class="text-sm font-medium text-text-secondary transition-colors hover:text-glow-purple"
+      >
+        ← Back to all apps
+      </a>
+    </nav>
+
+    <!-- Header -->
+    <header class="mb-10 flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
+      <div>
+        <div class="mb-4 flex items-center gap-4">
+          {
+            icon.startsWith("http") ? (
+              <img
+                src={icon}
+                alt={`${name} icon`}
+                class="h-16 w-16 rounded-2xl shadow-glow"
+              />
+            ) : (
+              <span
+                class="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-glow-purple/15 text-3xl font-black text-glow-purple"
+              >
+                {icon}
+              </span>
+            )
+          }
+          <div>
+            <span
+              class="chip mb-2 border border-glow-purple/30 bg-glow-purple/10 text-xs text-glow-purple"
+            >
+              {category}
+            </span>
+            <h1 class="glow-text text-4xl font-black text-text-primary">{name}</h1>
+          </div>
+        </div>
+        <p class="max-w-2xl text-lg leading-relaxed text-text-secondary">{why}</p>
+      </div>
+      <div class="flex shrink-0 flex-col gap-3">
+        {
+          website && (
+            <a
+              href={website}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="rounded-xl bg-accent-gradient px-6 py-3 text-center text-sm font-bold text-white shadow-glow-sm transition-all duration-300 hover:scale-[1.02] hover:shadow-glow-lg"
+            >
+              Visit Website →
+            </a>
+          )
+        }
+        {
+          repo && (
+            <a
+              href={repo}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="rounded-xl border border-white/[0.1] bg-white/[0.03] px-6 py-3 text-center text-sm font-bold text-text-secondary transition-all duration-300 hover:border-glow-purple/30 hover:text-text-primary hover:shadow-glow-sm"
+            >
+              View Source
+            </a>
+          )
+        }
+      </div>
+    </header>
+
+    <!-- Screenshot -->
+    {
+      screenshot.startsWith("http") ? (
+        <img
+          src={screenshot}
+          alt={`${name} screenshot`}
+          class="mb-10 w-full rounded-2xl border border-white/[0.08] shadow-glow"
+        />
+      ) : (
+        <div
+          class="mb-10 flex aspect-[16/9] w-full items-center justify-center rounded-2xl border border-white/[0.08] bg-gradient-to-br from-glow-purple/15 via-glow-indigo/10 to-transparent shadow-glow"
+        >
+          <span class="text-8xl font-black text-glow-purple/40">{name[0]}</span>
+        </div>
+      )
+    }
+
+    <div class="grid gap-10 lg:grid-cols-[1fr_320px]">
+      <!-- Main content -->
+      <div class="prose prose-invert max-w-none">
+        <Content />
+      </div>
+
+      <!-- Sidebar -->
+      <aside class="flex flex-col gap-6">
+        {
+          alternatives && alternatives.length > 0 && (
+            <div class="surface p-6">
+              <h2 class="mb-4 text-lg font-bold text-text-primary">
+                Alternatives I Tried
+              </h2>
+              <ul class="flex flex-col gap-2.5">
+                {alternatives.map((alt) => (
+                  <li class="flex items-center gap-2.5 text-sm text-text-secondary">
+                    <span class="text-glow-sky" aria-hidden="true">✕</span>
+                    {alt}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )
+        }
+        {
+          tags && tags.length > 0 && (
+            <div class="surface p-6">
+              <h2 class="mb-4 text-lg font-bold text-text-primary">Tags</h2>
+              <div class="flex flex-wrap gap-2">
+                {tags.map((tag) => (
+                  <span
+                    class="rounded-full bg-glow-purple/10 px-3 py-1 text-xs font-semibold text-glow-purple"
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )
+        }
+        <div class="surface p-6">
+          <h2 class="mb-4 text-lg font-bold text-text-primary">
+            TL;DR
+          </h2>
+          <p class="text-sm leading-relaxed text-text-secondary">{why}</p>
+        </div>
+      </aside>
+    </div>
+  </article>
+</Layout>
