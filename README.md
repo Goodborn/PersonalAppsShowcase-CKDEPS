@@ -2,6 +2,8 @@
 
 A curated showcase of the apps used day-to-day on Linux, and why each one earned its place over the alternatives.
 
+**[goodborn.github.io/PersonalAppsShowcase-CKDEPS](https://goodborn.github.io/PersonalAppsShowcase-CKDEPS/)**
+
 ## Apps listed
 
 **Browsers** — Brave Browser, Zen Browser
