@@ -1,34 +1,27 @@
-# Personal Apps Showcase — CKDEPS
+# Personal Apps Showcase
 
-A beautiful showcase of all the apps I use and why I chose them over the alternatives.
+A curated showcase of the apps used day-to-day on Linux, and why each one earned its place over the alternatives.
 
-Built with **Astro** + **Tailwind CSS**, deployed to **GitHub Pages**.
+## Apps listed
 
-## 🚀 Develop
+**Browsers** — Brave Browser, Zen Browser
 
-```bash
-npm install
-npm run dev
-```
+**Communication** — Betterbird, Discord
 
-Open `http://localhost:4321`
+**Development** — OpenCode Desktop, VS Code
 
-## 🏗️ Build
+**Downloads** — qBittorrent, SpotiFLAC
 
-```bash
-npm run build   # outputs to ./dist
-npm run preview # serve the build locally
-```
+**Gaming** — Bolt Launcher, Eden, Millennium
 
-## 📦 Add an app
+**Hardware** — OpenRGB
 
-1. Create `src/content/apps/your-app.md`
-2. Fill in the frontmatter (see [`src/content/apps/_README.md`](src/content/apps/_README.md))
-3. Add a screenshot to `public/screenshots/your-app.png`
-4. Reference it: `screenshot: "/screenshots/your-app.png"`
+**Media** — Blanket, Cine, Cozy, Fladder, Foliate, Jellyfin, Kdenlive, KolourPaint, Namida, Popcorn Time, Readest, Rufin, Upscayl
 
-## 🌐 Deploy
+**Productivity** — AppFlowy, LibreOffice
 
-Push to `main` — the GitHub Actions workflow builds and deploys to Pages automatically.
+**Recording** — GPU Screen Recorder, OBS Studio
 
-Site lives at: `https://goodborn.github.io/PersonalAppsShowcase-CKDEPS/`
+**System** — AnyDesk, Bazaar, GNOME Disks, Proton VPN, VM Curator
+
+**Terminal Tools** — Atuin, FZF, TheFuck, Zoxide
