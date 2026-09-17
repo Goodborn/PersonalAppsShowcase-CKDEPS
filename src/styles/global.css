@@ -14,42 +14,71 @@
   }
 
   ::selection {
-    @apply bg-glow-purple/30 text-text-primary;
+    @apply bg-glow-purple/25 text-text-primary;
   }
 
-  /* Custom scrollbar */
   ::-webkit-scrollbar {
     width: 10px;
   }
   ::-webkit-scrollbar-track {
-    background: #0a0f1c;
+    background: #030306;
   }
   ::-webkit-scrollbar-thumb {
-    background: rgba(168, 85, 247, 0.3);
-    border-radius: 8px;
+    background: rgba(167, 139, 250, 0.18);
+    border-radius: 6px;
+    border: 2px solid #030306;
+    background-clip: padding-box;
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: rgba(168, 85, 247, 0.5);
+    background: rgba(167, 139, 250, 0.32);
+    background-clip: padding-box;
   }
+
+  :focus-visible {
+    outline: 2px solid rgba(167, 139, 250, 0.85);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.4s;
+  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 @layer components {
   .glow-text {
-    text-shadow: 0 0 20px rgba(168, 85, 247, 0.3),
-      0 0 40px rgba(124, 58, 237, 0.15);
+    text-shadow: 0 0 30px rgba(167, 139, 250, 0.22);
+  }
+
+  /* Force hidden to win over any display utility (e.g. .flex) */
+  [hidden] {
+    display: none !important;
   }
 
   .glow-text-strong {
-    text-shadow: 0 0 40px rgba(168, 85, 247, 0.5),
-      0 0 80px rgba(124, 58, 237, 0.3);
+    text-shadow: 0 0 40px rgba(167, 139, 250, 0.28),
+      0 0 90px rgba(99, 102, 241, 0.14);
   }
 
   .surface {
-    @apply bg-card-gradient border border-white/[0.06] rounded-2xl;
+    @apply bg-card-gradient border border-white/[0.04] rounded-2xl;
   }
 
   .surface-hover {
-    @apply transition-all duration-300 hover:bg-card-hover-gradient hover:border-glow-purple/30 hover:shadow-glow;
+    @apply transition-all duration-300 hover:-translate-y-1 hover:bg-card-hover-gradient hover:border-glow-purple/25 hover:shadow-glow-lg;
   }
 
   .chip {
@@ -57,10 +86,109 @@
   }
 
   .chip-active {
-    @apply bg-accent-gradient text-white shadow-glow-sm;
+    @apply bg-accent-gradient text-text-primary shadow-glow-sm;
   }
 
   .chip-inactive {
-    @apply bg-glow-purple/15 text-glow-purple border border-glow-purple/20 hover:bg-glow-purple/25;
+    @apply bg-glow-purple/10 text-glow-purple border border-glow-purple/15 hover:bg-glow-purple/20;
+  }
+
+  /* ─── Scroll reveal ─────────────────────────── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px) scale(0.98);
+    transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .reveal-visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+
+  /* ─── Animated blobs / orbs ─────────────────── */
+  .animate-float {
+    animation: float 9s ease-in-out infinite;
+  }
+
+  .animate-float-slow {
+    animation: float 14s ease-in-out infinite;
+  }
+
+  .animate-orb-drift {
+    animation: orb-drift 22s ease-in-out infinite alternate;
+  }
+
+  .animate-gradient {
+    background-size: 200% 200%;
+    animation: gradient-shift 8s ease infinite;
+  }
+
+  /* ─── Entrance animations ───────────────────── */
+  .animate-fade-up {
+    opacity: 0;
+    animation: fade-up 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+
+  .animate-pop {
+    animation: pop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  }
+
+  .my-words > span {
+    transform-origin: 0 50%;
+  }
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pop {
+  from {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-18px);
+  }
+}
+
+@keyframes orb-drift {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(40px, 30px) scale(1.15);
+  }
+  100% {
+    transform: translate(-30px, -20px) scale(0.9);
+  }
+}
+
+@keyframes gradient-shift {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
   }
 }

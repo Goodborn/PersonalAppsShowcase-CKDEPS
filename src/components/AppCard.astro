@@ -1,5 +1,8 @@
 ---
+import { resolveAsset } from "@/utils/asset";
+
 interface Props {
+  slug: string;
   icon: string;
   name: string;
   category: string;
@@ -7,29 +10,56 @@ interface Props {
   screenshot: string;
   href: string;
   tags: string[];
+  source?: string;
+  install?: string;
 }
-const { icon, name, category, oneLiner, screenshot, href, tags } = Astro.props;
+const { slug, icon, name, category, oneLiner, screenshot, href, tags, source, install } = Astro.props;
+const hasImage = icon.startsWith("http") || icon.startsWith("/");
+const iconUrl = resolveAsset(icon);
+const shotUrl = resolveAsset(screenshot);
 ---
 
 <a
   href={href}
   data-category={category}
-  class="surface surface-hover group flex flex-col overflow-hidden"
+  data-search={`${name} ${category} ${tags.join(" ")}`}
+  class="surface surface-hover reveal group flex flex-col overflow-hidden"
 >
   <div class="relative aspect-[16/9] overflow-hidden bg-bg-950">
     {
-      screenshot.startsWith("http") ? (
+      screenshot.startsWith("http") || screenshot.startsWith("/") ? (
         <img
-          src={screenshot}
+          src={shotUrl}
           alt={`${name} screenshot`}
           loading="lazy"
           class="h-full w-full object-cover opacity-80 transition-all duration-500 group-hover:scale-105 group-hover:opacity-100"
         />
       ) : (
         <div
-          class="flex h-full w-full items-center justify-center bg-gradient-to-br from-glow-purple/20 via-glow-indigo/10 to-transparent"
+          class="relative flex h-full w-full items-center justify-center bg-gradient-to-br from-glow-purple/15 via-bg-900 to-bg-950"
         >
-          <span class="text-6xl font-black text-glow-purple/40">{name[0]}</span>
+          {
+            icon.startsWith("http") || icon.startsWith("/") ? (
+              <>
+                <img
+                  src={iconUrl}
+                  alt={name}
+                  loading="lazy"
+                  class="absolute left-1/2 top-1/2 h-64 w-64 -translate-x-1/2 -translate-y-1/2 rounded-[3rem] object-contain opacity-20 blur-[2px] transition-all duration-500 group-hover:opacity-25 group-hover:blur-0"
+                />
+                <img
+                  src={iconUrl}
+                  alt={`${name} icon`}
+                  loading="lazy"
+                  class="relative h-16 w-16 object-contain drop-shadow-[0_0_20px_rgba(120,120,160,0.4)] transition-transform duration-300 group-hover:scale-110"
+                />
+              </>
+            ) : (
+              <span class="text-6xl font-black text-glow-purple/25">
+                {name[0]}
+              </span>
+            )
+          }
         </div>
       )
     }
@@ -37,18 +67,42 @@ const { icon, name, category, oneLiner, screenshot, href, tags } = Astro.props;
       class="absolute inset-0 bg-gradient-to-t from-bg-950/80 via-transparent to-transparent"
     ></div>
     <span
-      class="chip absolute left-3 top-3 bg-bg-950/70 text-xs font-bold uppercase tracking-wider text-glow-purple backdrop-blur-md"
+      class="chip absolute left-3 top-3 border border-white/10 bg-bg-950/70 text-xs font-bold uppercase tracking-wider text-text-secondary backdrop-blur-md"
     >
       {category}
     </span>
+    {
+      install && (
+        <span
+          class="absolute right-3 top-3 z-10 inline-flex cursor-pointer items-center gap-1.5 rounded-full border border-white/10 bg-bg-950/70 px-3 py-1.5 text-xs font-semibold text-text-primary backdrop-blur-md transition-colors hover:border-glow-purple/40 hover:text-glow-purple"
+          data-install
+          data-install-url={install}
+          title={`Install via ${source ?? "download"}`}
+        >
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+          </svg>
+          {source ?? "Get"}
+        </span>
+      )
+    }
   </div>
   <div class="flex flex-1 flex-col gap-3 p-5">
     <div class="flex items-center gap-3">
       {
-        icon.startsWith("http") ? (
-          <img src={icon} alt={`${name} icon`} class="h-10 w-10 rounded-xl" loading="lazy" />
+        hasImage ? (
+          <img
+            src={iconUrl}
+            alt={`${name} icon`}
+            loading="lazy"
+            transition:name={`app-icon-${slug}`}
+            class="h-10 w-10 rounded-xl object-contain"
+          />
         ) : (
           <span
+            transition:name={`app-icon-${slug}`}
             class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-glow-purple/15 text-lg font-bold text-glow-purple"
           >
             {icon}
@@ -56,7 +110,10 @@ const { icon, name, category, oneLiner, screenshot, href, tags } = Astro.props;
         )
       }
       <div>
-        <h3 class="text-lg font-bold text-text-primary group-hover:text-glow-purple">
+        <h3
+          transition:name={`app-title-${slug}`}
+          class="text-lg font-bold text-text-primary transition-colors group-hover:text-glow-purple"
+        >
           {name}
         </h3>
         <p class="text-xs font-medium uppercase tracking-wider text-text-dim">

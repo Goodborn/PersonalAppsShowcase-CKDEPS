@@ -1,11 +1,17 @@
 ---
 name: "qBittorrent"
-category: "Networking"
-icon: "🧲"
-screenshot: "placeholder"
+category: "Downloads"
+icon: "/icons/qbittorrent.png"
+screenshot: "/screenshots/qbittorrent.png"
 website: "https://qbittorrent.org"
+source: "Pacman"
+install: "https://archlinux.org/packages/search/?q=qbittorrent"
 why: "A clean, feature-complete BitTorrent client — the spiritual successor to uTorrent without the bloat and ads."
 alternatives: ["Deluge", "Transmission", "uTorrent"]
+features:
+  - "RSS feed support for automated downloads"
+  - "Fine-grained per-torrent speed limits"
+  - "Built-in web UI management"
 tags: ["torrent", "p2p", "downloads"]
 featured: false
 ---

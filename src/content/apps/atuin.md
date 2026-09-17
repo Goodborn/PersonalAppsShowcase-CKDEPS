@@ -1,11 +1,17 @@
 ---
 name: "Atuin"
 category: "Terminal Tools"
-icon: "🕰️"
-screenshot: "placeholder"
+icon: "/icons/atin.png"
+screenshot: "/screenshots/atuin.png"
 website: "https://atuin.sh"
+source: "Pacman"
+install: "https://archlinux.org/packages/search/?q=atuin"
 why: "Shell history that actually works — synced, searchable, and my own."
 alternatives: ["bash history", "fish built-in history", "zsh-history-substring-search"]
+features:
+  - "Searchable history that actually finds things"
+  - "Syncs across all my machines"
+  - "Imports my existing history"
 tags: ["history", "sync", "search"]
 featured: false
 ---

@@ -1,11 +1,17 @@
 ---
 name: "OpenCode Desktop"
 category: "Development"
-icon: "🤖"
-screenshot: "placeholder"
+icon: "/icons/opencode.png"
+screenshot: "/screenshots/opencode.png"
 website: "https://opencode.ai"
+source: "AUR"
+install: "https://aur.archlinux.org/packages/opencode-desktop-bin"
 why: "An AI-powered coding assistant that runs entirely on my machine with my own API keys."
 alternatives: ["GitHub Copilot", "Cursor", "Continue"]
+features:
+  - "Local-first — runs with my own API keys"
+  - "Lives in the terminal I already use"
+  - "Fully scriptable and configurable"
 tags: ["ai", "assistant", "terminal"]
 featured: false
 ---

@@ -1,6 +1,7 @@
 ---
 import Layout from "@/layouts/Layout.astro";
 import { getCollection, render } from "astro:content";
+import { resolveAsset } from "@/utils/asset";
 
 const BASE = import.meta.env.BASE_URL;
 const baseURL = BASE.endsWith("/") ? BASE : `${BASE}/`;
@@ -15,8 +16,11 @@ export async function getStaticPaths() {
 
 const { app } = Astro.props;
 const { Content } = await render(app);
-const { name, category, icon, screenshot, website, repo, why, alternatives, tags } =
+const { name, category, icon, screenshot, website, repo, why, alternatives, features, tags, source, install } =
   app.data;
+const hasIcon = icon.startsWith("http") || icon.startsWith("/");
+const iconUrl = resolveAsset(icon);
+const shotUrl = resolveAsset(screenshot);
 ---
 
 <Layout
@@ -39,14 +43,16 @@ const { name, category, icon, screenshot, website, repo, why, alternatives, tags
       <div>
         <div class="mb-4 flex items-center gap-4">
           {
-            icon.startsWith("http") ? (
+            hasIcon ? (
               <img
-                src={icon}
+                src={iconUrl}
                 alt={`${name} icon`}
-                class="h-16 w-16 rounded-2xl shadow-glow"
+                transition:name={`app-icon-${app.slug}`}
+                class="h-16 w-16 rounded-2xl bg-white/[0.05] object-contain p-1.5 shadow-glow"
               />
             ) : (
               <span
+                transition:name={`app-icon-${app.slug}`}
                 class="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-glow-purple/15 text-3xl font-black text-glow-purple"
               >
                 {icon}
@@ -59,19 +65,54 @@ const { name, category, icon, screenshot, website, repo, why, alternatives, tags
             >
               {category}
             </span>
-            <h1 class="glow-text text-4xl font-black text-text-primary">{name}</h1>
+            <h1
+              transition:name={`app-title-${app.slug}`}
+              class="glow-text text-4xl font-black text-text-primary"
+            >
+              {name}
+            </h1>
           </div>
         </div>
         <p class="max-w-2xl text-lg leading-relaxed text-text-secondary">{why}</p>
       </div>
       <div class="flex shrink-0 flex-col gap-3">
         {
-          website && (
+          install ? (
+            <a
+              href={install}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="rounded-xl bg-accent-gradient px-6 py-3 text-center text-sm font-bold text-white shadow-glow-sm transition-all duration-300 hover:scale-[1.02] hover:shadow-glow-lg"
+            >
+              <span class="flex items-center justify-center gap-2">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                  <polyline points="7 10 12 15 17 10"></polyline>
+                  <line x1="12" y1="15" x2="12" y2="3"></line>
+                </svg>
+                Install via {source ?? "Download"}
+              </span>
+            </a>
+          ) : (
+            website && (
+              <a
+                href={website}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="rounded-xl bg-accent-gradient px-6 py-3 text-center text-sm font-bold text-white shadow-glow-sm transition-all duration-300 hover:scale-[1.02] hover:shadow-glow-lg"
+              >
+                Visit Website →
+              </a>
+            )
+          )
+        }
+        {
+          install && website && (
             <a
               href={website}
               target="_blank"
               rel="noopener noreferrer"
-              class="rounded-xl bg-accent-gradient px-6 py-3 text-center text-sm font-bold text-white shadow-glow-sm transition-all duration-300 hover:scale-[1.02] hover:shadow-glow-lg"
+              class="rounded-xl border border-white/[0.1] bg-white/[0.03] px-6 py-3 text-center text-sm font-bold text-text-secondary transition-all duration-300 hover:border-glow-purple/30 hover:text-text-primary hover:shadow-glow-sm"
             >
               Visit Website →
             </a>
@@ -94,17 +135,38 @@ const { name, category, icon, screenshot, website, repo, why, alternatives, tags
 
     <!-- Screenshot -->
     {
-      screenshot.startsWith("http") ? (
+      screenshot.startsWith("http") || screenshot.startsWith("/") ? (
         <img
-          src={screenshot}
+          src={shotUrl}
           alt={`${name} screenshot`}
           class="mb-10 w-full rounded-2xl border border-white/[0.08] shadow-glow"
         />
       ) : (
         <div
-          class="mb-10 flex aspect-[16/9] w-full items-center justify-center rounded-2xl border border-white/[0.08] bg-gradient-to-br from-glow-purple/15 via-glow-indigo/10 to-transparent shadow-glow"
+          class="relative mb-10 flex aspect-[16/9] w-full items-center justify-center overflow-hidden rounded-2xl border border-white/[0.08] bg-gradient-to-br from-glow-purple/15 via-bg-900 to-bg-950 shadow-glow"
         >
-          <span class="text-8xl font-black text-glow-purple/40">{name[0]}</span>
+          {
+            hasIcon ? (
+              <>
+                <img
+                  src={iconUrl}
+                  alt=""
+                  loading="lazy"
+                  class="absolute left-1/2 top-1/2 h-72 w-72 -translate-x-1/2 -translate-y-1/2 object-contain opacity-[0.12] blur-[3px]"
+                />
+                <img
+                  src={iconUrl}
+                  alt={`${name} icon`}
+                  loading="lazy"
+                  class="relative h-24 w-24 object-contain drop-shadow-[0_0_30px_rgba(120,120,160,0.5)]"
+                />
+              </>
+            ) : (
+              <span class="text-8xl font-black text-glow-purple/40">
+                {name[0]}
+              </span>
+            )
+          }
         </div>
       )
     }
@@ -118,8 +180,25 @@ const { name, category, icon, screenshot, website, repo, why, alternatives, tags
       <!-- Sidebar -->
       <aside class="flex flex-col gap-6">
         {
+          features && features.length > 0 && (
+            <div class="surface surface-hover p-6">
+              <h2 class="mb-4 text-lg font-bold text-text-primary">
+                Why It Made The Cut
+              </h2>
+              <ul class="flex flex-col gap-2.5">
+                {features.map((feature) => (
+                  <li class="flex items-start gap-2.5 text-sm leading-relaxed text-text-secondary">
+                    <span class="mt-0.5 shrink-0 text-glow-purple" aria-hidden="true">✓</span>
+                    {feature}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )
+        }
+        {
           alternatives && alternatives.length > 0 && (
-            <div class="surface p-6">
+            <div class="surface surface-hover p-6">
               <h2 class="mb-4 text-lg font-bold text-text-primary">
                 Alternatives I Tried
               </h2>
@@ -136,7 +215,7 @@ const { name, category, icon, screenshot, website, repo, why, alternatives, tags
         }
         {
           tags && tags.length > 0 && (
-            <div class="surface p-6">
+            <div class="surface surface-hover p-6">
               <h2 class="mb-4 text-lg font-bold text-text-primary">Tags</h2>
               <div class="flex flex-wrap gap-2">
                 {tags.map((tag) => (
@@ -150,12 +229,6 @@ const { name, category, icon, screenshot, website, repo, why, alternatives, tags
             </div>
           )
         }
-        <div class="surface p-6">
-          <h2 class="mb-4 text-lg font-bold text-text-primary">
-            TL;DR
-          </h2>
-          <p class="text-sm leading-relaxed text-text-secondary">{why}</p>
-        </div>
       </aside>
     </div>
   </article>

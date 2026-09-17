@@ -1,11 +1,17 @@
 ---
 name: "VS Code"
 category: "Development"
-icon: "⌨️"
-screenshot: "placeholder"
+icon: "/icons/vscode.png"
+screenshot: "/screenshots/vscode.png"
 website: "https://code.visualstudio.com"
+source: "AUR"
+install: "https://aur.archlinux.org/packages/visual-studio-code-bin"
 why: "The editor that gets out of the way — massive extension ecosystem and the best language support in the game."
 alternatives: ["Vim", "Neovim", "JetBrains IDEs"]
+features:
+  - "Best-in-class language support for everything I touch"
+  - "Massive extension marketplace"
+  - "Integrated debugging and terminal"
 tags: ["code-editor", "ide", "development"]
 featured: false
 ---

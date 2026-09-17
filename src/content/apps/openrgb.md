@@ -1,11 +1,17 @@
 ---
 name: "OpenRGB"
 category: "Hardware"
-icon: "🌈"
-screenshot: "placeholder"
+icon: "/icons/openrgb.png"
+screenshot: "/screenshots/openrgb.png"
 website: "https://openrgb.org"
+source: "Pacman"
+install: "https://archlinux.org/packages/search/?q=openrgb"
 why: "One app to control every RGB device — no brand-vendor bloatware required."
 alternatives: ["Proprietary vendor apps", "Msi afterburner's cousin", "Lighting control scripts"]
+features:
+  - "One app controls every RGB brand I own"
+  - "Works natively on Linux"
+  - "Headless server mode for my own scripts"
 tags: ["rgb", "hardware", "lighting"]
 featured: false
 ---

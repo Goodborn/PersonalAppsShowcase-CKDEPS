@@ -1,11 +1,17 @@
 ---
 name: "AppFlowy"
 category: "Productivity"
-icon: "📝"
-screenshot: "placeholder"
-website: "https://appflowy.io"
-why: "The open-source Notion alternative — local-first, private, and cross-platform."
+icon: "/icons/appflowy.png"
+screenshot: "/screenshots/appflowy.png"
+website: "https://appflowy.com"
+source: "Flatpak"
+install: "https://flathub.org/apps/org.appflowy.AppFlowy"
+why: "The open-source note-taking and project app — local-first, private, and cross-platform."
 alternatives: ["Notion", "Obsidian", "Joplin"]
+features:
+  - "Local-first and fully open source"
+  - "Notion-style databases, boards and pages"
+  - "Task tracking + structured notes in one place"
 tags: ["notes", "organizer", "open-source"]
 featured: false
 ---

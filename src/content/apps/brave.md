@@ -1,11 +1,17 @@
 ---
 name: "Brave Browser"
-category: "Internet"
-icon: "🦁"
-screenshot: "placeholder"
+category: "Browsers"
+icon: "/icons/brave.png"
+screenshot: "/screenshots/brave.png"
 website: "https://brave.com"
+source: "Pacman"
+install: "https://archlinux.org/packages/search/?q=brave-origin-bin"
 why: "Privacy-first browsing with built-in ad blocking that just works out of the box."
 alternatives: ["Firefox", "Chrome", "Edge"]
+features:
+  - "Built-in ad & tracker blocking from day one"
+  - "Chromium-based — every Chrome extension works"
+  - "Pages load noticeably faster with ads never loading"
 tags: ["browser", "privacy", "ad-blocking"]
 featured: true
 ---

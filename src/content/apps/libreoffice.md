@@ -1,11 +1,17 @@
 ---
 name: "LibreOffice"
 category: "Productivity"
-icon: "📄"
-screenshot: "placeholder"
+icon: "/icons/libreoffice.png"
+screenshot: "/screenshots/libreoffice.png"
 website: "https://libreoffice.org"
+source: "Pacman"
+install: "https://archlinux.org/packages/search/?q=libreoffice-still"
 why: "The office suite that turns 'I need Word' into 'this is just better' — free, native, and on every machine."
 alternatives: ["Microsoft 365", "OnlyOffice", "Google Docs"]
+features:
+  - "Truly free — no subscription to rent"
+  - "Native on Linux, fast and responsive"
+  - "ODT/ODS are cleaner for version control"
 tags: ["office", "documents", "spreadsheets"]
 featured: false
 ---

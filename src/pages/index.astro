@@ -1,6 +1,7 @@
 ---
 import Layout from "@/layouts/Layout.astro";
 import AppCard from "@/components/AppCard.astro";
+import AppRow from "@/components/AppRow.astro";
 import { getCollection } from "astro:content";
 
 const BASE = import.meta.env.BASE_URL;
@@ -20,33 +21,59 @@ const all = [...featured, ...nonFeatured];
 
 <Layout title="Apps I Use — Goodborn" description="Curated apps that power my workflow — and why I chose them.">
   <!-- Hero -->
-  <section class="relative overflow-hidden px-6 py-24 sm:py-32">
+  <section class="relative overflow-hidden px-6 pb-24 pt-28 sm:pb-32 sm:pt-36">
+    <div class="absolute inset-0" aria-hidden="true">
+      <div
+        class="animate-orb-drift absolute -top-24 left-1/4 h-72 w-72 rounded-full bg-glow-purple/10 blur-[110px]"
+      ></div>
+      <div
+        class="animate-float-slow absolute right-1/5 top-16 h-56 w-56 rounded-full bg-glow-indigo/10 blur-[100px]"
+      ></div>
+      <div
+        class="animate-float absolute bottom-0 left-10 h-48 w-48 rounded-full bg-glow-sky/5 blur-[90px]"
+      ></div>
+    </div>
+
     <div class="relative mx-auto max-w-4xl text-center">
       <div
-        class="mb-6 inline-flex items-center gap-2 rounded-full border border-glow-purple/30 bg-glow-purple/10 px-4 py-1.5 backdrop-blur-md"
+        class="animate-fade-up mb-6 inline-flex items-center gap-2 rounded-full border border-glow-purple/30 bg-glow-purple/10 px-4 py-1.5 backdrop-blur-md"
       >
         <span class="relative flex h-2.5 w-2.5">
           <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-glow-purple opacity-75"></span>
           <span class="relative inline-flex h-2.5 w-2.5 rounded-full bg-glow-purple"></span>
         </span>
         <span class="text-xs font-bold uppercase tracking-widest text-glow-purple">
-          Living on Arch Linux · KDE Plasma
+          Living on CachyOS · KDE Plasma
         </span>
       </div>
-      <h1 class="glow-text-strong mb-6 text-5xl font-black leading-tight tracking-tight text-text-primary sm:text-7xl">
+
+      <h1
+        class="animate-fade-up glow-text-strong mb-6 text-5xl font-black leading-tight tracking-tight text-text-primary sm:text-7xl"
+        style="animation-delay: 120ms"
+      >
         Apps I Use
-        <span class="block bg-accent-gradient-wide bg-clip-text text-transparent">
+        <span
+          class="animate-gradient block bg-accent-gradient-wide bg-clip-text text-transparent"
+        >
           And Why I Chose Them
         </span>
       </h1>
-      <p class="mx-auto mb-10 max-w-2xl text-lg leading-relaxed text-text-secondary sm:text-xl">
+
+      <p
+        class="animate-fade-up mx-auto mb-10 max-w-2xl text-lg leading-relaxed text-text-secondary sm:text-xl"
+        style="animation-delay: 240ms"
+      >
         A curated arsenal of {all.length}+ apps that power my daily workflow.
         Every pick earned its place by beating the alternatives I tried.
       </p>
-      <div class="flex flex-wrap items-center justify-center gap-4">
+
+      <div
+        class="animate-fade-up flex flex-wrap items-center justify-center gap-4"
+        style="animation-delay: 360ms"
+      >
         <a
           href={`${baseURL}#apps`}
-          class="rounded-xl bg-accent-gradient px-8 py-3.5 text-base font-bold text-white shadow-glow-lg transition-all duration-300 hover:scale-105 hover:shadow-[0_8px_40px_rgba(168,85,247,0.6)]"
+          class="rounded-xl bg-accent-gradient px-8 py-3.5 text-base font-bold text-text-primary shadow-glow-lg transition-all duration-300 hover:scale-105 hover:shadow-[0_8px_40px_rgba(120,120,160,0.2)]"
         >
           Browse the Collection
         </a>
@@ -63,25 +90,25 @@ const all = [...featured, ...nonFeatured];
   <!-- Stats strip -->
   <section class="border-y border-white/[0.06] bg-white/[0.02] py-10">
     <div class="mx-auto grid max-w-5xl grid-cols-2 gap-8 px-6 sm:grid-cols-4">
-      <div class="text-center">
+      <div class="reveal text-center">
         <p class="text-4xl font-black text-text-primary glow-text">{all.length}</p>
         <p class="mt-1 text-xs font-bold uppercase tracking-widest text-text-dim">
           Apps Curated
         </p>
       </div>
-      <div class="text-center">
+      <div class="reveal text-center" style="transition-delay: 80ms">
         <p class="text-4xl font-black text-text-primary glow-text">{categories.length}</p>
         <p class="mt-1 text-xs font-bold uppercase tracking-widest text-text-dim">
           Categories
         </p>
       </div>
-      <div class="text-center">
+      <div class="reveal text-center" style="transition-delay: 160ms">
         <p class="text-4xl font-black text-text-primary glow-text">100%</p>
         <p class="mt-1 text-xs font-bold uppercase tracking-widest text-text-dim">
           Free / Open Source
         </p>
       </div>
-      <div class="text-center">
+      <div class="reveal text-center" style="transition-delay: 240ms">
         <p class="text-4xl font-black text-text-primary glow-text">∞</p>
         <p class="mt-1 text-xs font-bold uppercase tracking-widest text-text-dim">
           Alternatives Tried
@@ -104,26 +131,90 @@ const all = [...featured, ...nonFeatured];
         find your next tool.
       </p>
     </div>
-    <div id="category-chips" class="mb-10 flex flex-wrap items-center justify-center gap-2.5">
-      <button
-        class="chip chip-active"
-        data-category="all"
+
+    <!-- Toolbar: search + filter chips + view toggle -->
+    <div
+      class="mb-10 flex flex-col items-center justify-between gap-4 rounded-2xl border border-white/[0.04] bg-white/[0.02] p-4 sm:flex-row"
+    >
+      <div id="category-chips" class="flex flex-wrap items-center justify-center gap-2">
+        <button class="chip chip-active" data-category="all">
+          All Apps
+          <span class="ml-2 rounded-full bg-white/20 px-2 py-0.5 text-xs font-bold">{all.length}</span>
+        </button>
+        {
+          categories.map((cat) => (
+            <button class="chip chip-inactive" data-category={cat}>
+              {cat}
+            </button>
+          ))
+        }
+      </div>
+
+      <div
+        class="flex shrink-0 items-center gap-2 rounded-xl border border-white/[0.06] bg-bg-950/60 py-1.5 pl-3.5 pr-1.5"
       >
-        All Apps
-        <span class="ml-2 rounded-full bg-white/20 px-2 py-0.5 text-xs font-bold">{all.length}</span>
-      </button>
-      {
-        categories.map((cat) => (
-          <button class="chip chip-inactive" data-category={cat}>
-            {cat}
-          </button>
-        ))
-      }
+        <svg viewBox="0 0 24 24" fill="none" class="h-4 w-4 shrink-0 text-text-dim" aria-hidden="true">
+          <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2" />
+          <path d="m20 20-3.5-3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+        </svg>
+        <input
+          id="search-input"
+          type="search"
+          placeholder="Search apps..."
+          autocomplete="off"
+          class="w-36 bg-transparent text-sm font-medium text-text-primary placeholder-text-dim focus:outline-none sm:w-44"
+        />
+        <button
+          id="search-clear"
+          class="hidden rounded-lg px-2 py-1 text-xs font-bold text-text-dim transition-colors hover:text-text-primary"
+          type="button"
+          aria-label="Clear search"
+        >
+          ✕
+        </button>
+      </div>
+
+      <div
+        class="flex shrink-0 items-center gap-1 rounded-xl border border-white/[0.06] bg-bg-950/60 p-1"
+        role="group"
+        aria-label="View mode"
+      >
+        <button
+          data-view-toggle="grid"
+          class="view-btn flex items-center gap-2 rounded-lg px-3.5 py-2 text-sm font-semibold text-text-secondary transition-all duration-200"
+        >
+          <svg viewBox="0 0 20 20" fill="none" class="h-4 w-4" aria-hidden="true">
+            <rect x="3" y="3" width="6" height="6" rx="1.5" stroke="currentColor" stroke-width="1.6" />
+            <rect x="11" y="3" width="6" height="6" rx="1.5" stroke="currentColor" stroke-width="1.6" />
+            <rect x="3" y="11" width="6" height="6" rx="1.5" stroke="currentColor" stroke-width="1.6" />
+            <rect x="11" y="11" width="6" height="6" rx="1.5" stroke="currentColor" stroke-width="1.6" />
+          </svg>
+          Grid
+        </button>
+        <button
+          data-view-toggle="list"
+          class="view-btn flex items-center gap-2 rounded-lg px-3.5 py-2 text-sm font-semibold text-text-secondary transition-all duration-200"
+        >
+          <svg viewBox="0 0 20 20" fill="none" class="h-4 w-4" aria-hidden="true">
+            <path d="M3 5h14M3 10h14M3 15h14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+            <path d="M7 5h.01M7 10h.01M7 15h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+          </svg>
+          List
+        </button>
+      </div>
     </div>
-    <div id="apps" class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3" data-category-container>
+
+    <!-- Grid view -->
+    <div
+      id="grid-view"
+      data-view="grid"
+      data-category-container
+      class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3"
+    >
       {
         all.map((app) => (
           <AppCard
+            slug={app.slug}
             icon={app.data.icon}
             name={app.data.name}
             category={app.data.category}
@@ -131,6 +222,33 @@ const all = [...featured, ...nonFeatured];
             screenshot={app.data.screenshot}
             href={`${baseURL}apps/${app.slug}/`}
             tags={app.data.tags ?? []}
+            source={app.data.source}
+            install={app.data.install}
+          />
+        ))
+      }
+    </div>
+
+    <!-- List view -->
+    <div
+      id="list-view"
+      data-view="list"
+      data-category-container
+      hidden
+      class="mx-auto grid w-full grid-cols-1 gap-4 pb-4 md:grid-cols-2 xl:grid-cols-3"
+    >
+      {
+        all.map((app, i) => (
+          <AppRow
+            index={i}
+            icon={app.data.icon}
+            name={app.data.name}
+            category={app.data.category}
+            oneLiner={app.data.why}
+            screenshot={app.data.screenshot}
+            href={`${baseURL}apps/${app.slug}/`}
+            source={app.data.source}
+            install={app.data.install}
           />
         ))
       }
@@ -138,30 +256,150 @@ const all = [...featured, ...nonFeatured];
   </section>
 
   <script>
-    const container = document.querySelector("[data-category-container]");
-    const chips = document.querySelectorAll("[data-category]");
-    const appEls = container?.children ?? [];
+    function setup() {
+      const gridView = document.getElementById("grid-view") as HTMLElement | null;
+      const listView = document.getElementById("list-view") as HTMLElement | null;
+      const chips = document.querySelectorAll<HTMLElement>("[data-category]");
+      const viewBtns = document.querySelectorAll<HTMLButtonElement>("[data-view-toggle]");
+      const searchInput = document.getElementById("search-input") as HTMLInputElement | null;
+      const searchClear = document.getElementById("search-clear") as HTMLElement | null;
+      const activeViewClass = "bg-accent-gradient text-text-primary shadow-glow-sm";
+      let selectedCategory = "all";
+      let searchQuery = "";
 
-    chips.forEach((chip) => {
-      chip.addEventListener("click", () => {
-        chips.forEach((c) => {
-          c.classList.remove("chip-active");
-          c.classList.add("chip-inactive");
-        });
-        chip.classList.remove("chip-inactive");
-        chip.classList.add("chip-active");
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("reveal-visible");
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.12 }
+      );
 
-        const selected = chip.dataset.category;
-        Array.from(appEls).forEach((el) => {
-          const cat = el.dataset.category;
-          el.style.display =
-            selected === "all" || cat === selected ? "" : "none";
+      function revealIn() {
+        document.querySelectorAll(".reveal").forEach((el) => {
+          observer.observe(el);
         });
-        container?.classList.add("animate-[fadeIn_0.3s_ease-in]");
-        setTimeout(() => {
-          container?.classList.remove("animate-[fadeIn_0.3s_ease-in]");
-        }, 300);
+      }
+
+      function resetReveals(container: HTMLElement) {
+        Array.from(container.children).forEach((child, i) => {
+          const el = child as HTMLElement;
+          if (el.style.display === "none") return;
+          el.classList.remove("reveal-visible");
+          el.style.transitionDelay = `${Math.min(i, 9) * 45}ms`;
+          observer.observe(el);
+        });
+      }
+
+      function applyFilter() {
+        const catMatch = selectedCategory === "all";
+        const q = searchQuery.trim().toLowerCase();
+        [gridView, listView].forEach((container) => {
+          if (!container || container.hidden) return;
+          Array.from(container.children).forEach((child) => {
+            const el = child as HTMLElement;
+            const inCategory = catMatch || el.dataset.category === selectedCategory;
+            const inSearch = !q || (el.dataset.search || "").toLowerCase().includes(q);
+            el.style.display = inCategory && inSearch ? "" : "none";
+          });
+          resetReveals(container);
+        });
+        if (searchClear) searchClear.classList.toggle("hidden", !q);
+      }
+
+      function setView(view: string) {
+        const show = view === "grid" ? gridView : listView;
+        const hide = view === "grid" ? listView : gridView;
+        if (!show || !hide) return;
+        hide.hidden = true;
+        hide.style.display = "none";
+        show.hidden = false;
+        show.style.display = "";
+
+        viewBtns.forEach((btn) => {
+          btn.classList.remove(...activeViewClass.split(" "));
+          btn.classList.remove("bg-white/[0.03]");
+          if (btn.dataset.viewToggle === view)
+            btn.classList.add(...activeViewClass.split(" "));
+        });
+
+        const active = document.querySelector<HTMLElement>("[data-category].chip-active");
+        selectedCategory = active ? active.dataset.category ?? "all" : "all";
+        applyFilter();
+
+        try {
+          localStorage.setItem("apps-view", view);
+        } catch {}
+      }
+
+      chips.forEach((chip) => {
+        chip.addEventListener("click", () => {
+          chips.forEach((c) => {
+            c.classList.remove("chip-active");
+            c.classList.add("chip-inactive");
+          });
+          chip.classList.remove("chip-inactive");
+          chip.classList.add("chip-active");
+          chip.classList.add("animate-pop");
+          setTimeout(() => chip.classList.remove("animate-pop"), 500);
+          selectedCategory = chip.dataset.category ?? "all";
+          applyFilter();
+        });
       });
+
+      if (searchInput) {
+        searchInput.addEventListener("input", () => {
+          searchQuery = searchInput.value;
+          applyFilter();
+        });
+        searchInput.addEventListener("keydown", (e) => {
+          if (e.key === "Escape") {
+            searchInput.value = "";
+            searchQuery = "";
+            applyFilter();
+            searchInput.blur();
+          }
+        });
+      }
+      if (searchClear) {
+        searchClear.addEventListener("click", () => {
+          if (!searchInput) return;
+          searchInput.value = "";
+          searchQuery = "";
+          applyFilter();
+          searchInput.focus();
+        });
+      }
+
+      viewBtns.forEach((btn) => {
+        btn.addEventListener("click", () => setView(btn.dataset.viewToggle ?? "grid"));
+      });
+
+      let stored = "grid";
+      try {
+        stored = localStorage.getItem("apps-view") || "grid";
+      } catch {}
+
+      const savedView = document.querySelector(`[data-view-toggle="${stored}"]`)
+        ? stored
+        : "grid";
+      setView(savedView);
+      revealIn();
+    }
+
+    document.addEventListener("astro:page-load", setup);
+
+    document.addEventListener("click", (e) => {
+      const target = e.target as HTMLElement | null;
+      const installEl = target?.closest<HTMLElement>("[data-install]");
+      if (!installEl) return;
+      e.preventDefault();
+      e.stopPropagation();
+      window.open(installEl.dataset.installUrl, "_blank", "noopener,noreferrer");
     });
   </script>
 </Layout>

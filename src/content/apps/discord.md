@@ -1,11 +1,17 @@
 ---
 name: "Discord"
 category: "Communication"
-icon: "💬"
-screenshot: "placeholder"
+icon: "/icons/discord.png"
+screenshot: "/screenshots/discord.png"
 website: "https://discord.com"
+source: "Flatpak"
+install: "https://flathub.org/apps/com.discordapp.Discord"
 why: "Where everyone already is — communities, voice, and screen share in one place."
 alternatives: ["Matrix/Element", "Telegram", "Slack"]
+features:
+  - "The communities I care about are already here"
+  - "Polished voice chat and screen share"
+  - "Server roles and channels done right"
 tags: ["chat", "communities", "voice"]
 featured: false
 ---

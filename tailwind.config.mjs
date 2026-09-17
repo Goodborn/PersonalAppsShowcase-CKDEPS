@@ -7,37 +7,37 @@ export default {
     extend: {
       colors: {
         bg: {
-          950: "#0a0f1c",
-          900: "#0d1a2e",
-          850: "#1a1130",
-          800: "#0f0b1a",
+          950: "#030305",
+          900: "#08080c",
+          850: "#0d0d14",
+          800: "#050508",
         },
         glow: {
-          purple: "#a855f7",
+          purple: "#a78bfa",
           indigo: "#6366f1",
-          sky: "#0ea5e9",
+          sky: "#fb7185",
         },
         text: {
-          primary: "#f0e7ff",
-          secondary: "#c4b5fd",
-          dim: "rgba(255,255,255,0.45)",
+          primary: "#f1f1f8",
+          secondary: "#aeaec2",
+          dim: "rgba(255,255,255,0.38)",
         },
       },
       backgroundImage: {
         "app-gradient":
-          "linear-gradient(165deg, #0f0b1a 0%, #1a1130 35%, #0d1a2e 70%, #0a0f1c 100%)",
-        "accent-gradient": "linear-gradient(135deg, #a855f7, #6366f1)",
-        "accent-gradient-wide": "linear-gradient(90deg, #a855f7, #6366f1, #0ea5e9)",
+          "linear-gradient(165deg, #050308 0%, #0b0a16 35%, #090a13 70%, #020204 100%)",
+        "accent-gradient": "linear-gradient(135deg, #a78bfa, #6366f1)",
+        "accent-gradient-wide": "linear-gradient(90deg, #a78bfa, #6366f1, #fb7185)",
         "card-gradient":
-          "linear-gradient(180deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.02) 100%)",
+          "linear-gradient(180deg, rgba(255,255,255,0.035) 0%, rgba(255,255,255,0.012) 100%)",
         "card-hover-gradient":
-          "linear-gradient(180deg, rgba(168,85,247,0.12) 0%, rgba(99,102,241,0.06) 100%)",
+          "linear-gradient(180deg, rgba(167,139,250,0.12) 0%, rgba(99,102,241,0.05) 100%)",
       },
       boxShadow: {
-        glow: "0 0 24px rgba(168,85,247,0.15)",
-        "glow-sm": "0 2px 12px rgba(168,85,247,0.3)",
-        "glow-lg": "0 6px 32px rgba(168,85,247,0.5), 0 0 0 1px rgba(168,85,247,0.4)",
-        "glow-sky": "0 4px 24px rgba(14,165,233,0.3)",
+        glow: "0 0 24px rgba(167,139,250,0.14)",
+        "glow-sm": "0 2px 12px rgba(167,139,250,0.22)",
+        "glow-lg": "0 10px 34px rgba(99,102,241,0.30), 0 0 0 1px rgba(167,139,250,0.16)",
+        "glow-sky": "0 4px 20px rgba(251,113,133,0.22)",
       },
       fontFamily: {
         display: ['"Inter"', '"Segoe UI"', "system-ui", "sans-serif"],
@@ -45,6 +45,9 @@ export default {
       },
       transitionDuration: {
         2000: "2000ms",
+      },
+      transitionTimingFunction: {
+        DEFAULT: "cubic-bezier(0.16, 1, 0.3, 1)",
       },
     },
   },

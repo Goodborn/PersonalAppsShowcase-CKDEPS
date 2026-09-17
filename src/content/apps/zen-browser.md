@@ -1,11 +1,17 @@
 ---
 name: "Zen Browser"
-category: "Internet"
-icon: "🦊"
-screenshot: "placeholder"
+category: "Browsers"
+icon: "/icons/zen.png"
+screenshot: "/screenshots/zen.png"
 website: "https://zen-browser.app"
+source: "Pacman"
+install: "https://archlinux.org/packages/search/?q=zen-browser-bin"
 why: "The most beautiful browser on Linux — a modern, vertically-tabbed Firefox that feels like the future."
 alternatives: ["Firefox", "Vivaldi", "Arc"]
+features:
+  - "Beautiful vertical tabs that fit wide monitors"
+  - "Split-screen browsing without a window manager"
+  - "Workspaces + compact mode that just feel right"
 tags: ["browser", "vertical-tabs", "firefox"]
 featured: true
 ---

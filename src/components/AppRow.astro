@@ -1,0 +1,105 @@
+---
+import { resolveAsset } from "@/utils/asset";
+
+interface Props {
+  index: number;
+  icon: string;
+  name: string;
+  category: string;
+  oneLiner: string;
+  screenshot: string;
+  href: string;
+  source?: string;
+  install?: string;
+}
+const { index, icon, name, category, oneLiner, screenshot, href, source, install } = Astro.props;
+const hasIcon = icon.startsWith("http") || icon.startsWith("/");
+const iconUrl = resolveAsset(icon);
+const shotUrl = resolveAsset(screenshot);
+---
+
+<a
+  href={href}
+  data-category={category}
+  data-search={`${name} ${category}`}
+  class="reveal surface surface-hover group flex flex-col overflow-hidden sm:flex-row"
+  style={`transition-delay: ${index * 50}ms`}
+>
+  <!-- Image: left side, full height -->
+  <div class="relative w-full shrink-0 overflow-hidden bg-bg-950 sm:aspect-auto sm:w-40">
+    {
+      screenshot.startsWith("http") || screenshot.startsWith("/") ? (
+        <img
+          src={shotUrl}
+          alt={`${name} screenshot`}
+          loading="lazy"
+          class="absolute inset-0 h-full w-full object-cover opacity-80 transition-all duration-500 group-hover:scale-105 group-hover:opacity-100"
+        />
+      ) : (
+        <div
+          class="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-glow-purple/15 via-bg-900 to-bg-950"
+        >
+          {
+            hasIcon ? (
+              <>
+                <img
+                  src={iconUrl}
+                  alt=""
+                  aria-hidden="true"
+                  loading="lazy"
+                  class="absolute left-1/2 top-1/2 h-28 w-28 -translate-x-1/2 -translate-y-1/2 object-contain opacity-20 blur-[2px] transition-all duration-500 group-hover:opacity-25 group-hover:blur-0"
+                />
+                <img
+                  src={iconUrl}
+                  alt={`${name} icon`}
+                  loading="lazy"
+                  class="relative h-10 w-10 object-contain drop-shadow-[0_0_20px_rgba(157,157,184,0.4)] transition-transform duration-300 group-hover:scale-110"
+                />
+              </>
+            ) : (
+              <span class="text-3xl font-black text-glow-purple/25">
+                {name[0]}
+              </span>
+            )
+          }
+        </div>
+      )
+    }
+  </div>
+
+  <!-- Info: right side -->
+  <div class="flex min-w-0 flex-1 flex-col justify-center gap-1.5 p-4">
+    <div class="flex flex-wrap items-center justify-between gap-x-2 gap-y-1">
+      <h3 class="truncate text-base font-bold leading-tight text-text-primary">
+        {name}
+      </h3>
+      <div class="flex shrink-0 items-center gap-2">
+        {
+          install && (
+            <span
+              class="inline-flex cursor-pointer items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.03] px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-text-dim transition-colors hover:border-glow-purple/40 hover:text-glow-purple"
+              data-install
+              data-install-url={install}
+              title={`Install via ${source ?? "download"}`}
+            >
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="7 10 12 15 17 10"></polyline>
+                <line x1="12" y1="15" x2="12" y2="3"></line>
+              </svg>
+              {source ?? "Get"}
+            </span>
+          )
+        }
+        <span
+          class="rounded-full border border-white/10 bg-white/[0.03] px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-text-dim"
+        >
+          {category}
+        </span>
+      </div>
+    </div>
+    <p class="line-clamp-2 text-sm leading-snug text-text-secondary">
+      {oneLiner}
+    </p>
+  </div>
+</a>

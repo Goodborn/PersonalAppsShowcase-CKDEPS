@@ -1,11 +1,17 @@
 ---
 name: "Kdenlive"
 category: "Media"
-icon: "🎬"
-screenshot: "placeholder"
+icon: "/icons/kdenlive.png"
+screenshot: "/screenshots/kdenlive.png"
 website: "https://kdenlive.org"
+source: "Flatpak"
+install: "https://flathub.org/apps/org.kde.kdenlive"
 why: "A full-featured professional video editor that runs natively on Linux — no cloud required."
 alternatives: ["DaVinci Resolve", "Shotcut", "OpenShot"]
+features:
+  - "Native Qt — fast and light on Linux"
+  - "Multi-track nonlinear timeline"
+  - "Hardware-accelerated H.264/H.265 export"
 tags: ["video-editing", "linux-native"]
 featured: true
 ---

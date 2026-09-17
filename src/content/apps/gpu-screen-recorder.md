@@ -1,11 +1,17 @@
 ---
 name: "GPU Screen Recorder"
-category: "Media"
-icon: "🎥"
-screenshot: "placeholder"
+category: "Recording"
+icon: "/icons/gpu-screen-recorder.png"
+screenshot: "/screenshots/gpu-screen-recorder.png"
 website: "https://git.dec05eba.com/GPU-Screen-Recorder/"
+source: "Pacman"
+install: "https://archlinux.org/packages/search/?q=gpu-screen-recorder"
 why: "Screen recording so fast it barely touches the CPU — the tool I reach for when I just need the capture."
 alternatives: ["SimpleScreenRecorder", "Kazam", "GNOME Screen Recorder"]
+features:
+  - "Encodes straight on the GPU — near-zero CPU cost"
+  - "Always-on replay buffer"
+  - "Simple one-click capture when OBS is overkill"
 tags: ["screen-recording", "gpu-accelerated", "capture"]
 featured: false
 ---

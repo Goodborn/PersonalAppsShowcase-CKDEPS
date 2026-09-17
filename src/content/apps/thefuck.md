@@ -1,11 +1,17 @@
 ---
 name: "TheFuck"
 category: "Terminal Tools"
-icon: "🐍"
-screenshot: "placeholder"
+icon: "/icons/thefuck.png"
+screenshot: "/screenshots/thefuck.gif"
 website: "https://github.com/nvbn/thefuck"
+source: "Pacman"
+install: "https://archlinux.org/packages/search/?q=thefuck"
 why: "The single most relatable terminal tool ever made — it fixes your commands so you don't have to."
 alternatives: ["Being more careful when typing"]
+features:
+  - "Fixes command typos automatically"
+  - "Catches missing sudo, wrong dirs, git typos"
+  - "Fun to use — huge time saver"
 tags: ["terminal", "fun", "bash", "fish"]
 featured: false
 ---

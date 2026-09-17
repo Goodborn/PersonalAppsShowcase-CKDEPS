@@ -1,11 +1,17 @@
 ---
 name: "OBS Studio"
-category: "Media"
-icon: "🎥"
-screenshot: "placeholder"
+category: "Recording"
+icon: "/icons/obs.png"
+screenshot: "/screenshots/obs.png"
 website: "https://obsproject.com"
+source: "Pacman"
+install: "https://archlinux.org/packages/search/?q=obs-studio"
 why: "The most flexible live streaming and recording tool — everything else feels like a toy."
 alternatives: ["OBS Alternatives", "SimpleScreenRecorder", "Kazam"]
+features:
+  - "Scene composition with layered sources"
+  - "Per-source audio mixing"
+  - "Endless plugin ecosystem"
 tags: ["streaming", "recording", "production"]
 featured: true
 ---
